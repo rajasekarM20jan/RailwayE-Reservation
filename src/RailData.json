@@ -1,0 +1,50 @@
+[
+  {
+    "From" : "bengaluru",
+    "To" : "chennai",
+    "Train" : "bengalurutochennai",
+    "Timings": ["6AM","10AM","1PM","6PM","11PM"]
+  },
+  {
+    "From" : "hosur",
+    "To" : "bengaluru",
+    "Train" : "hosurtobengaluru",
+    "Timings": ["6AM","7AM","9AM","3PM","7PM"]
+  },
+  {
+    "From" : "bengaluru",
+    "To" : "hosur",
+    "Train" : "bengalurutohosur",
+    "Timings": ["8AM","10AM","4PM","6PM","10PM"]
+  },
+  {
+    "From" : "chennai",
+    "To" : "bengaluru",
+    "Train" : "chennaitobengaluru",
+    "Timings": ["12AM","6AM","1PM","5PM","10PM"]
+  },
+  {
+    "From" : "hosur",
+    "To" : "salem",
+    "Train" : "hosurtosalem",
+    "Timings": ["6AM","10AM","1PM","6PM","11PM"]
+  },
+  {
+    "From" : "hosur",
+    "To" : "coimbatore",
+    "Train" : "hosurtocoimbatore",
+    "Timings": ["8AM","11AM","2PM","8PM","10PM"]
+  },
+  {
+    "From" : "hosur",
+    "To" : "ernakulam",
+    "Train" : "hosurtoernakulam",
+    "Timings": ["6AM","10AM","1PM","7PM","10PM"]
+  },
+  {
+    "From" : "hosur",
+    "To" : "tirunelveli",
+    "Train" : "hosurtotirunelveli",
+    "Timings": ["3AM","9AM","4PM","9PM","11:45PM"]
+  }
+]
