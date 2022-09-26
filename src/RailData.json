@@ -3,48 +3,56 @@
     "From" : "bengaluru",
     "To" : "chennai",
     "Train" : "bengalurutochennai",
-    "Timings": ["6AM","10AM","1PM","6PM","11PM"]
+    "Timings": ["6AM","10AM","1PM","6PM","11PM"],
+    "cost" : ["1200/-","950/-","750/-","450/-","250/-"]
   },
   {
     "From" : "hosur",
     "To" : "bengaluru",
     "Train" : "hosurtobengaluru",
-    "Timings": ["6AM","7AM","9AM","3PM","7PM"]
+    "Timings": ["6AM","7AM","9AM","3PM","7PM"],
+    "cost" : ["120/-","95/-","75/-","45/-","25/-"]
   },
   {
     "From" : "bengaluru",
     "To" : "hosur",
     "Train" : "bengalurutohosur",
-    "Timings": ["8AM","10AM","4PM","6PM","10PM"]
+    "Timings": ["8AM","10AM","4PM","6PM","10PM"],
+    "cost" : ["120/-","90/-","70/-","40/-","26/-"]
   },
   {
     "From" : "chennai",
     "To" : "bengaluru",
     "Train" : "chennaitobengaluru",
-    "Timings": ["12AM","6AM","1PM","5PM","10PM"]
+    "Timings": ["12AM","6AM","1PM","5PM","10PM"],
+    "cost" : ["1200/-","950/-","750/-","450/-","250/-"]
   },
   {
     "From" : "hosur",
     "To" : "salem",
     "Train" : "hosurtosalem",
-    "Timings": ["6AM","10AM","1PM","6PM","11PM"]
+    "Timings": ["6AM","10AM","1PM","6PM","11PM"],
+    "cost" : ["900/-","650/-","550/-","250/-","150/-"]
   },
   {
     "From" : "hosur",
     "To" : "coimbatore",
     "Train" : "hosurtocoimbatore",
-    "Timings": ["8AM","11AM","2PM","8PM","10PM"]
+    "Timings": ["8AM","11AM","2PM","8PM","10PM"],
+    "cost" : ["1100/-","900/-","700/-","400/-","200/-"]
   },
   {
     "From" : "hosur",
     "To" : "ernakulam",
     "Train" : "hosurtoernakulam",
-    "Timings": ["6AM","10AM","1PM","7PM","10PM"]
+    "Timings": ["6AM","10AM","1PM","7PM","10PM"],
+    "cost" : ["1300/-" ,"1050/-","850/-","500/-","280/-"]
   },
   {
     "From" : "hosur",
     "To" : "tirunelveli",
     "Train" : "hosurtotirunelveli",
-    "Timings": ["3AM","9AM","4PM","9PM","11:45PM"]
+    "Timings": ["3AM","9AM","4PM","9PM","11:45PM"],
+    "cost" : ["999/-","699/-","500/-","275/-","180/-"]
   }
 ]
