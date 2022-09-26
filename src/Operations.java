@@ -4,7 +4,6 @@ import org.json.simple.parser.JSONParser;
 import java.io.FileReader;
 import java.util.*;
 import java.util.List;
-
 public class Operations {
     public static final String ANSI_RED= "\u001B[31m";
     public static final String ANSI_GREEN= "\u001B[32m";
@@ -16,8 +15,6 @@ public class Operations {
     List<String> Cost;
     String travellerName;
     Calendar cal=Calendar.getInstance();
-
-
     Scanner input = new Scanner(System.in);
     ArrayList<RailwayDatabase> railData=new ArrayList<>();
     ArrayList<UserDatabase> userData=new ArrayList<>();
@@ -171,7 +168,6 @@ public class Operations {
                                         System.out.println("Maximum attempts Reached..\n Thank You!");
                                         break;
                                     }
-
                                 }
                             }
                             if(cal==0)
@@ -188,7 +184,7 @@ public class Operations {
                 }
             }
         }if(!userNotFound){
-            System.out.println("User Invalid!! / User Name not found!!");
+            System.out.println("User Invalid!! / User Name not found!! \n\tThank You!!");
         }
     }
     public static void main(String[] args) throws Exception {
