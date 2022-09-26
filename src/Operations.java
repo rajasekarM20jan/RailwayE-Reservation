@@ -3,8 +3,11 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import java.io.FileReader;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
+import java.util.regex.Pattern;
+
 //---Business Logic----
 public class Operations {
     //global color declarations
@@ -22,6 +25,8 @@ public class Operations {
     Scanner input = new Scanner(System.in); //global scanner for getting inputs
     ArrayList<RailwayDatabase> railData=new ArrayList<>(); //Arraylist for railway database
     ArrayList<UserDatabase> userData=new ArrayList<>(); //Arraylist for user database
+    String travellingDate;
+
     //Constructor
     Operations() throws Exception{
         //acquiring data from railData.json for railway database
@@ -95,6 +100,7 @@ public class Operations {
                 case "1": {
                     ct=0;
                     System.out.println("Your ticket is Booked. \tDetails are:\nName : " + travellerName + "\nDepart At : " + from + "\tArrive At : " + to + "\nClass : " + choice + ANSI_GREEN + "\t@Cost : Re.1/-" + ANSI_RESET);
+                    System.out.println("Travelling Date : "+travellingDate);
                     System.out.println("Booked On: " + cal.getTime() + "\n\t\tThank You!");
                     break;
                 }
@@ -139,6 +145,29 @@ public class Operations {
                         count=0;
                         System.out.println("Provide Name of the Traveller");
                         String travellerName=input.nextLine();
+                        System.out.println("Provide Date for travelling in (DD/MM/YYYY) Format");
+                        int calc=3;
+                        while(calc>0){
+                            String travellingDate=input.nextLine();
+                            Pattern p= Pattern.compile("^(0[0-9]|1[0-9]|2[0-9]|3[0-1])\\/(0[0-9]|1[0-2])\\/(19|20)\\d\\d$");
+                            Date s;
+                            if(p.matcher(travellingDate).matches()) {
+                                SimpleDateFormat d = new SimpleDateFormat("dd/MM/yyyy");
+                                Date tdate = new Date();
+                                d.format(tdate);
+                                s = d.parse(travellingDate);
+                                if (s.compareTo(tdate) > 0) {
+                                    calc=0;
+                                    this.travellingDate=travellingDate;
+                                } else {
+                                    System.out.println("Choose dates of future");
+                                    calc-=1;
+                                }
+                            }else{
+                                System.out.println("Enter in valid date format (DD/MM/YYYY)");
+                                calc-=1;
+                            }
+                        }
                         int cal=3;
                         while(cal>0) {
                             System.out.println("Select Class of Travelling..\n1---> AC (1ST CLASS)\n2---> AC (2 TIER)\n3---> AC (3 TIER)\n4---> NON-AC (SLEEPER)\n5---> SECOND (SITTING)");
