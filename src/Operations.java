@@ -28,7 +28,7 @@ public class Operations {
             String From = (String) ((JSONObject) dexter).get("From");
             String To = (String) ((JSONObject) dexter).get("To");
             List<String> Timings= (List)((JSONObject)dexter).get("Timings");
-            List<String> Cost=(List<String>)((JSONObject)dexter).get("cost");
+            List<String> Cost=(List)((JSONObject)dexter).get("cost");
             railData.add(new RailwayDatabase(From,To,Timings,Cost));
         }
     }
@@ -90,7 +90,7 @@ public class Operations {
                 case "1": {
                     ct=0;
                     System.out.println("Your ticket is Booked. \tDetails are:\nName : " + travellerName + "\nDepart At : " + from + "\tArrive At : " + to + "\nClass : " + choice + ANSI_GREEN + "\t@Cost : Re.1/-" + ANSI_RESET);
-                    System.out.println("Booked On: " + cal.getTime() + "\n\tThank You!");
+                    System.out.println("Booked On: " + cal.getTime() + "\n\t\tThank You!");
                     break;
                 }
                 case "2": {
