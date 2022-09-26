@@ -30,7 +30,7 @@ public class Operations {
     //Constructor
     Operations() throws Exception{
         //acquiring data from railData.json for railway database
-        Object railDataObject=  new JSONParser().parse(new FileReader("C:\\Users\\Temp-user4\\IdeaProjects\\RailwayE-Reservation\\src\\RailData.json"));
+        Object railDataObject=  new JSONParser().parse(new FileReader("C:\\Users\\raj\\IdeaProjects\\RailwayE-Reservation\\src\\RailData.json"));
         JSONArray objectConvert= (JSONArray) railDataObject;
         for (Object dexter:objectConvert) {
             String From = (String) ((JSONObject) dexter).get("From");
@@ -122,7 +122,7 @@ public class Operations {
     }
     void userAccess() throws Exception{
         //accessing user data and verifying them
-        Object temp= new JSONParser().parse(new FileReader("C:\\Users\\Temp-user4\\IdeaProjects\\RailwayE-Reservation\\src\\UserData.json"));
+        Object temp= new JSONParser().parse(new FileReader("C:\\Users\\raj\\IdeaProjects\\RailwayE-Reservation\\src\\UserData.json"));
         JSONArray tempA= (JSONArray) temp;
         System.out.println("Departure time selected is :"+departureTime);
         for (Object getTheData:tempA) {
@@ -147,6 +147,7 @@ public class Operations {
                         String travellerName=input.nextLine();
                         System.out.println("Provide Date for travelling in (DD/MM/YYYY) Format");
                         int calc=3;
+                        int cal=3;
                         while(calc>0){
                             String travellingDate=input.nextLine();
                             Pattern p= Pattern.compile("^(0[0-9]|1[0-9]|2[0-9]|3[0-1])\\/(0[0-9]|1[0-2])\\/(19|20)\\d\\d$");
@@ -162,13 +163,21 @@ public class Operations {
                                 } else {
                                     System.out.println("Choose dates of future");
                                     calc-=1;
+                                    if(calc==0){
+                                        cal=0;
+                                        System.out.println("Maximum attempts reached \n Thank You!");
+                                    }
                                 }
                             }else{
                                 System.out.println("Enter in valid date format (DD/MM/YYYY)");
                                 calc-=1;
+                                if(calc==0){
+                                    cal=0;
+                                    System.out.println("Maximum attempts reached \n Thank You!");
+                                }
                             }
                         }
-                        int cal=3;
+
                         while(cal>0) {
                             System.out.println("Select Class of Travelling..\n1---> AC (1ST CLASS)\n2---> AC (2 TIER)\n3---> AC (3 TIER)\n4---> NON-AC (SLEEPER)\n5---> SECOND (SITTING)");
                             String choose = input.nextLine();
