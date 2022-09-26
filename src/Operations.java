@@ -1,24 +1,30 @@
+//import Statements..
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import java.io.FileReader;
 import java.util.*;
 import java.util.List;
+//---Business Logic----
 public class Operations {
-    public static final String ANSI_RED= "\u001B[31m";
-    public static final String ANSI_GREEN= "\u001B[32m";
-    public static final String ANSI_RESET= "\u001B[0m";
+    //global color declarations
+    public static final String ANSI_RED= "\u001B[31m"; //for red colored text
+    public static final String ANSI_GREEN= "\u001B[32m"; //for green colored text
+    public static final String ANSI_RESET= "\u001B[0m"; //for resetting the color of text
+    // global variable declarations
     String from;
     String to;
     String train;
     String departureTime;
     List<String> Cost;
     String travellerName;
-    Calendar cal=Calendar.getInstance();
-    Scanner input = new Scanner(System.in);
-    ArrayList<RailwayDatabase> railData=new ArrayList<>();
-    ArrayList<UserDatabase> userData=new ArrayList<>();
+    Calendar cal=Calendar.getInstance(); //getting instance of date and time through java.util.calendar
+    Scanner input = new Scanner(System.in); //global scanner for getting inputs
+    ArrayList<RailwayDatabase> railData=new ArrayList<>(); //Arraylist for railway database
+    ArrayList<UserDatabase> userData=new ArrayList<>(); //Arraylist for user database
+    //Constructor
     Operations() throws Exception{
+        //acquiring data from railData.json for railway database
         Object railDataObject=  new JSONParser().parse(new FileReader("C:\\Users\\Temp-user4\\IdeaProjects\\RailwayE-Reservation\\src\\RailData.json"));
         JSONArray objectConvert= (JSONArray) railDataObject;
         for (Object dexter:objectConvert) {
@@ -30,6 +36,7 @@ public class Operations {
         }
     }
     void ticketBooking() throws Exception {
+        //getting instance values from railway database
         System.out.println("\n\t\t----------- Java's 1 Rupee Train -------------");
         System.out.println("From : ");
         String from = input.nextLine();
@@ -60,7 +67,7 @@ public class Operations {
                         this.to=to;
                         this.train=train;
                         this.departureTime=departureTime;
-                        userAccess();
+                        userAccess(); //Calling method userAccess
                         break;
                     }
                     default:{
@@ -74,6 +81,7 @@ public class Operations {
         }
     }
     void dummy(String choice,int opt){
+        //Confirmation and booking process
         System.out.println("The provided details are:\tName : " + travellerName + ", From: " + from + ", TO: " + to + ", Train: " + train + ", Departure Time: " + departureTime);
         System.out.println("Class Of Travelling: " + choice);
         System.out.println((ANSI_RED+"Cost : "+Cost.get(opt))+ANSI_RESET);
@@ -107,6 +115,7 @@ public class Operations {
         }
     }
     void userAccess() throws Exception{
+        //accessing user data and verifying them
         Object temp= new JSONParser().parse(new FileReader("C:\\Users\\Temp-user4\\IdeaProjects\\RailwayE-Reservation\\src\\UserData.json"));
         JSONArray tempA= (JSONArray) temp;
         System.out.println("Departure time selected is :"+departureTime);
@@ -136,6 +145,7 @@ public class Operations {
                             String choose = input.nextLine();
                             this.travellerName = travellerName;
                             switch (choose) {
+                                //Calling dummy method for cases(1-5)
                                 case "1": {
                                     dummy("AC (1ST CLASS)", 0);
                                     cal=0;
@@ -186,10 +196,5 @@ public class Operations {
         }if(!userNotFound){
             System.out.println("User Invalid!! / User Name not found!! \n\tThank You!!");
         }
-    }
-    public static void main(String[] args) throws Exception {
-        new Operations();
-        Operations o=new Operations();
-        o.ticketBooking();
     }
 }
