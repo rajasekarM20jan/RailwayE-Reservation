@@ -30,7 +30,7 @@ public class Operations {
     //Constructor
     Operations() throws Exception{
         //acquiring data from railData.json for railway database
-        Object railDataObject=  new JSONParser().parse(new FileReader("C:\\Users\\raj\\IdeaProjects\\RailwayE-Reservation\\src\\RailData.json"));
+        Object railDataObject=  new JSONParser().parse(new FileReader("C:\\Users\\Temp-user4\\IdeaProjects\\RailwayE-Reservation\\src\\RailData.json"));
         JSONArray objectConvert= (JSONArray) railDataObject;
         for (Object dexter:objectConvert) {
             String From = (String) ((JSONObject) dexter).get("From");
@@ -60,7 +60,6 @@ public class Operations {
                     count+=1;
                 }
                 List<String> Cost=railData.get(i).getCost();
-                this.Cost=Cost;
                 System.out.println("Select any of the above Options for initiating the Booking Process:");
                 String Options= input.nextLine();
                 switch(Options){
@@ -72,8 +71,34 @@ public class Operations {
                         this.to=to;
                         this.train=train;
                         this.departureTime=departureTime;
-                        userAccess(); //Calling method userAccess
-                        break;
+                        this.Cost=Cost;
+                        System.out.println("Choose any of the below Options for booking Process: \n1------>Login  \n2.------>Register");
+                        int a=3;
+                        while(a>0) {
+                            String loginAccess = input.nextLine();
+                            switch (loginAccess) {
+                                case "1": {
+                                    userAccess(); //Calling method userAccess
+                                    a=0;
+                                    break;
+                                }
+                                case "2": {
+                                    a=0;
+                                    new Registration();
+                                    userAccess();
+                                    break;
+                                }
+                                default: {
+                                    System.out.println("Invalid Input");
+                                    a-=1;
+                                    if(a==0){
+                                        System.out.println("Maximum attempts Reached \nThank you!");
+                                        break;
+                                    }
+
+                                }
+                            }
+                        }break;
                     }
                     default:{
                         System.out.println("Invalid input");
@@ -101,7 +126,7 @@ public class Operations {
                     ct=0;
                     System.out.println("Your ticket is Booked. \tDetails are:\nName : " + travellerName + "\nDepart At : " + from + "\tArrive At : " + to + "\nClass : " + choice + ANSI_GREEN + "\t@Cost : Re.1/-" + ANSI_RESET);
                     System.out.println("Travelling Date : "+travellingDate);
-                    System.out.println("Booked On: " + cal.getTime() + "\n\t\tThank You!");
+                    System.out.println("\nBooked On: " + cal.getTime() + "\n\t\tThank You!");
                     break;
                 }
                 case "2": {
@@ -120,9 +145,9 @@ public class Operations {
             }
         }
     }
-    void userAccess() throws Exception{
+    public void userAccess() throws Exception{
         //accessing user data and verifying them
-        Object temp= new JSONParser().parse(new FileReader("C:\\Users\\raj\\IdeaProjects\\RailwayE-Reservation\\src\\UserData.json"));
+        Object temp= new JSONParser().parse(new FileReader("C:\\Users\\Temp-user4\\IdeaProjects\\RailwayE-Reservation\\src\\UserData.json"));
         JSONArray tempA= (JSONArray) temp;
         System.out.println("Departure time selected is :"+departureTime);
         for (Object getTheData:tempA) {
