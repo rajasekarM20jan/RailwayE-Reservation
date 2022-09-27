@@ -51,28 +51,29 @@ public class Operations {
         System.out.println("\t"+from+" to "+to);
         boolean gettingOut=false;
         for (int i = 0; i < railData.size(); i++) {
-            if (train.equals(railData.get(i).getTrain())) {
+            if (train.equals(railData.get(i).getTrain())) { //checks whether the given from and to is available
                 int count=1;
                 gettingOut=true;
                 System.out.println("Available Train Timings Are:");
-                for (int j = 0; j < railData.get(i).getTimings().size(); j++){
+                for (int j = 0; j < railData.get(i).getTimings().size(); j++){ //Printing the timings of requested train
                     System.out.println("\t"+count+"--->" + railData.get(i).getTimings().get(j));
                     count+=1;
                 }
                 List<String> Cost=railData.get(i).getCost();
                 System.out.println("Select any of the above Options for initiating the Booking Process:");
-                String Options= input.nextLine();
+                String Options= input.nextLine(); //getting value as string for timings
                 switch(Options){
                     case "1": case"2": case "3": case "4": case "5":
                     {
-                        int opt=Integer.parseInt(Options);
+                        int opt=Integer.parseInt(Options); //parsing the string value into integer for setting the option as index for timings
                         String departureTime = railData.get(i).getTimings().get((opt - 1));
                         this.from=from;
                         this.to=to;
                         this.train=train;
                         this.departureTime=departureTime;
                         this.Cost=Cost;
-                        System.out.println("Choose any of the below Options for booking Process: \n1------>Login  \n2.------>Register");
+                        //getting choice from user for either login or registration
+                        System.out.println("Choose any of the below Options for booking Process: \n1------>Login  \n2------>Register");
                         int a=3;
                         while(a>0) {
                             String loginAccess = input.nextLine();
@@ -84,8 +85,8 @@ public class Operations {
                                 }
                                 case "2": {
                                     a=0;
-                                    new Registration();
-                                    userAccess();
+                                    new Registration(); //calling constructor from Registration class
+                                    userAccess(); //calling method userAccess
                                     break;
                                 }
                                 default: {
@@ -101,7 +102,7 @@ public class Operations {
                         }break;
                     }
                     default:{
-                        System.out.println("Invalid input");
+                        System.out.println("Invalid option");
                         break;
                     }
                 }
@@ -153,111 +154,114 @@ public class Operations {
         for (Object getTheData:tempA) {
             String userName=(String)((JSONObject)getTheData).get("userName");
             String password=(String)((JSONObject)getTheData).get("password");
-            userData.add(new UserDatabase(userName,password));
+            userData.add(new UserDatabase(userName,password)); //adding json to array named userData
         }
         System.out.println("Enter Your Login Credentials for Booking Process");
-        System.out.println("User Name :");
-        String name=input.nextLine();
         boolean userNotFound=false;
-        for(int i=0;i<userData.size();i++){
-            if(name.equals(userData.get(i).getUserName())){
-                int count=3;
-                userNotFound=true;
-                while(count>0){
-                    System.out.println("Password :");
-                    String password = input.nextLine();
-                    if(password.equals(userData.get(i).getPassword())){
-                        count=0;
-                        System.out.println("Provide Name of the Traveller");
-                        String travellerName=input.nextLine();
-                        System.out.println("Provide Date for travelling in (DD/MM/YYYY) Format");
-                        int calc=3;
-                        int cal=3;
-                        while(calc>0){
-                            String travellingDate=input.nextLine();
-                            Pattern p= Pattern.compile("^(0[0-9]|1[0-9]|2[0-9]|3[0-1])\\/(0[0-9]|1[0-2])\\/(19|20)\\d\\d$");
-                            Date s;
-                            if(p.matcher(travellingDate).matches()) {
-                                SimpleDateFormat d = new SimpleDateFormat("dd/MM/yyyy");
-                                Date tdate = new Date();
-                                d.format(tdate);
-                                s = d.parse(travellingDate);
-                                if (s.compareTo(tdate) > 0) {
-                                    calc=0;
-                                    this.travellingDate=travellingDate;
+        while (!userNotFound) {
+            System.out.println("User Name :");
+            String name=input.nextLine();
+            for (int i = 0; i < userData.size(); i++) {
+                if (name.equals(userData.get(i).getUserName())) {
+                    int count = 3;
+                    userNotFound = true;
+                    while (count > 0) {
+                        System.out.println("Password :");
+                        String password = input.nextLine();
+                        if (password.equals(userData.get(i).getPassword())) {
+                            count = 0;
+                            System.out.println("Provide Name of the Traveller");
+                            String travellerName = input.nextLine();
+                            System.out.println("Provide Date for travelling in (DD/MM/YYYY) Format");
+                            int calc = 3;
+                            int cal = 3;
+                            while (calc > 0) {
+                                String travellingDate = input.nextLine();
+                                Pattern p = Pattern.compile("^(0[0-9]|1[0-9]|2[0-9]|3[0-1])\\/(0[0-9]|1[0-2])\\/(19|20)\\d\\d$");
+                                Date s;
+                                if (p.matcher(travellingDate).matches()) {
+                                    SimpleDateFormat d = new SimpleDateFormat("dd/MM/yyyy");
+                                    Date tdate = new Date();
+                                    d.format(tdate);
+                                    s = d.parse(travellingDate);
+                                    if (s.compareTo(tdate) > 0) {
+                                        calc = 0;
+                                        this.travellingDate = travellingDate;
+                                    } else {
+                                        System.out.println("Choose dates of future");
+                                        calc -= 1;
+                                        if (calc == 0) {
+                                            cal = 0;
+                                            System.out.println("Maximum attempts reached \n Thank You!");
+                                        }
+                                    }
                                 } else {
-                                    System.out.println("Choose dates of future");
-                                    calc-=1;
-                                    if(calc==0){
-                                        cal=0;
+                                    System.out.println("Enter in valid date format (DD/MM/YYYY)");
+                                    calc -= 1;
+                                    if (calc == 0) {
+                                        cal = 0;
                                         System.out.println("Maximum attempts reached \n Thank You!");
                                     }
                                 }
-                            }else{
-                                System.out.println("Enter in valid date format (DD/MM/YYYY)");
-                                calc-=1;
-                                if(calc==0){
-                                    cal=0;
-                                    System.out.println("Maximum attempts reached \n Thank You!");
-                                }
                             }
-                        }
 
-                        while(cal>0) {
-                            System.out.println("Select Class of Travelling..\n1---> AC (1ST CLASS)\n2---> AC (2 TIER)\n3---> AC (3 TIER)\n4---> NON-AC (SLEEPER)\n5---> SECOND (SITTING)");
-                            String choose = input.nextLine();
-                            this.travellerName = travellerName;
-                            switch (choose) {
-                                //Calling dummy method for cases(1-5)
-                                case "1": {
-                                    dummy("AC (1ST CLASS)", 0);
-                                    cal=0;
-                                    break;
-                                }
-                                case "2": {
-                                    dummy("AC (2 TIER)", 1);
-                                    cal=0;
-                                    break;
-                                }
-                                case "3": {
-                                    dummy("AC (3 TIER)", 2);
-                                    cal=0;
-                                    break;
-                                }
-                                case "4": {
-                                    dummy("NON-AC (SLEEPER)", 3);
-                                    cal=0;
-                                    break;
-                                }
-                                case "5": {
-                                    dummy("SECOND (SITTING)", 4);
-                                    cal=0;
-                                    break;
-                                }
-                                default: {
-                                    System.out.println("Invalid Input provided..!\n Try Again! \n"+(cal-1)+" attempt/attempts left");
-                                    cal-=1;
-                                    if(cal==0){
-                                        System.out.println("Maximum attempts Reached..\n Thank You!");
+                            while (cal > 0) {
+                                System.out.println("Select Class of Travelling..\n1---> AC (1ST CLASS)\n2---> AC (2 TIER)\n3---> AC (3 TIER)\n4---> NON-AC (SLEEPER)\n5---> SECOND (SITTING)");
+                                String choose = input.nextLine();
+                                this.travellerName = travellerName;
+                                switch (choose) {
+                                    //Calling dummy method for cases(1-5)
+                                    case "1": {
+                                        dummy("AC (1ST CLASS)", 0);
+                                        cal = 0;
                                         break;
                                     }
+                                    case "2": {
+                                        dummy("AC (2 TIER)", 1);
+                                        cal = 0;
+                                        break;
+                                    }
+                                    case "3": {
+                                        dummy("AC (3 TIER)", 2);
+                                        cal = 0;
+                                        break;
+                                    }
+                                    case "4": {
+                                        dummy("NON-AC (SLEEPER)", 3);
+                                        cal = 0;
+                                        break;
+                                    }
+                                    case "5": {
+                                        dummy("SECOND (SITTING)", 4);
+                                        cal = 0;
+                                        break;
+                                    }
+                                    default: {
+                                        System.out.println("Invalid Input provided..!\n Try Again! \n" + (cal - 1) + " attempt/attempts left");
+                                        cal -= 1;
+                                        if (cal == 0) {
+                                            System.out.println("Maximum attempts Reached..\n Thank You!");
+                                            break;
+                                        }
+                                    }
                                 }
+                                if (cal == 0)
+                                    break;
                             }
-                            if(cal==0)
-                                break;
+                        } else {
+                            System.out.println("Please provide your valid password!");
+                            System.out.println((count - 1) + " attempts left");
+                            if (count == 1) {
+                                System.out.println("Maximum Attempts reached!\n\t Thank You!");
+                            }
+                            count -= 1;
                         }
-                    }else{
-                        System.out.println("Please provide your valid password!");
-                        System.out.println((count-1)+" attempts left");
-                        if(count==1){
-                            System.out.println("Maximum Attempts reached!\n\t Thank You!");
-                        }
-                        count-=1;
                     }
                 }
             }
-        }if(!userNotFound){
-            System.out.println("User Invalid!! / User Name not found!! \n\tThank You!!");
+            if (!userNotFound) {
+                System.out.println("User Invalid!! / User Name not found!! \n\tTry again");
+            }
         }
     }
 }
