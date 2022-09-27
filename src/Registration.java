@@ -6,18 +6,21 @@ import java.io.FileWriter;
 import java.util.Scanner;
 
 public class Registration extends Operations {
-
-
+    String userName;
+    String name;
+    Scanner regInput = new Scanner(System.in);
+    Object regularObject=new JSONParser().parse(new FileReader("src/UserData.json"));
+    JSONArray arrayOfUserData=(JSONArray) regularObject;
+    JSONObject objectOfInitialization= new JSONObject();
     public Registration() throws Exception{
-        Object regularObject=new JSONParser().parse(new FileReader("C:\\Users\\Temp-user4\\IdeaProjects\\RailwayE-Reservation\\src\\UserData.json"));
-        JSONArray arrayOfUserData=(JSONArray) regularObject;
-        JSONObject objectOfInitialization= new JSONObject();
-        Scanner regInput = new Scanner(System.in);
-        System.out.println("------Credits To Jeeva Prakash------");
+        //------Credits To Jeeva Prakash------
         System.out.println("Enter Your Name :");
-        String name=regInput.nextLine();
+        name=regInput.nextLine();
         System.out.println("Create a User Name:");
-        String userName=regInput.nextLine();
+        userName=regInput.nextLine();
+        validationOfUserName();
+    }
+    void validationOfUserName() throws Exception {
         System.out.println("Create Password:");
         String password=regInput.nextLine();
         System.out.println("Confirm Password");
@@ -36,14 +39,14 @@ public class Registration extends Operations {
                 objectOfInitialization.put("userName",userName);
                 objectOfInitialization.put("password",password);
                 arrayOfUserData.add(objectOfInitialization);
-                FileWriter w=new FileWriter("C:\\Users\\Temp-user4\\IdeaProjects\\RailwayE-Reservation\\src\\UserData.json");
+                FileWriter w=new FileWriter("src/UserData.json");
                 w.write(String.valueOf(arrayOfUserData));
                 w.flush();
                 w.close();
 
             }else{
                 System.out.println("Passwords doesn't match");
-                new Registration();
+                validationOfUserName();
             }
         }
     }

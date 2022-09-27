@@ -26,11 +26,13 @@ public class Operations {
     ArrayList<RailwayDatabase> railData=new ArrayList<>(); //Arraylist for railway database
     ArrayList<UserDatabase> userData=new ArrayList<>(); //Arraylist for user database
     String travellingDate;
+    String ageOfTraveller;
+    String genderOfTraveller;
 
     //Constructor
     Operations() throws Exception{
         //acquiring data from railData.json for railway database
-        Object railDataObject=  new JSONParser().parse(new FileReader("C:\\Users\\Temp-user4\\IdeaProjects\\RailwayE-Reservation\\src\\RailData.json"));
+        Object railDataObject=  new JSONParser().parse(new FileReader("src/RailData.json"));
         JSONArray objectConvert= (JSONArray) railDataObject;
         for (Object dexter:objectConvert) {
             String From = (String) ((JSONObject) dexter).get("From");
@@ -125,7 +127,7 @@ public class Operations {
             switch (book) {
                 case "1": {
                     ct=0;
-                    System.out.println("Your ticket is Booked. \tDetails are:\nName : " + travellerName + "\nDepart At : " + from + "\tArrive At : " + to + "\nClass : " + choice + ANSI_GREEN + "\t@Cost : Re.1/-" + ANSI_RESET);
+                    System.out.println("Your ticket is Booked. \tDetails are:\nName : " + travellerName + "\tAge : "+ageOfTraveller+"\tGender : "+genderOfTraveller+"\nDepart At : " + from + "\tArrive At : " + to + "\nClass : " + choice + ANSI_GREEN + "\t@Cost : Re.1/-" + ANSI_RESET);
                     System.out.println("Travelling Date : "+travellingDate);
                     System.out.println("\nBooked On: " + cal.getTime() + "\n\t\tThank You!");
                     break;
@@ -148,7 +150,7 @@ public class Operations {
     }
     public void userAccess() throws Exception{
         //accessing user data and verifying them
-        Object temp= new JSONParser().parse(new FileReader("C:\\Users\\Temp-user4\\IdeaProjects\\RailwayE-Reservation\\src\\UserData.json"));
+        Object temp= new JSONParser().parse(new FileReader("src/UserData.json"));
         JSONArray tempA= (JSONArray) temp;
         System.out.println("Departure time selected is :"+departureTime);
         for (Object getTheData:tempA) {
@@ -172,6 +174,41 @@ public class Operations {
                             count = 0;
                             System.out.println("Provide Name of the Traveller");
                             String travellerName = input.nextLine();
+                            System.out.println("Provide Age of the Traveller");
+                            String ageOfTraveller=input.nextLine();
+                            int b=3;
+                            String genderOfTraveller = null;
+                            while (b>0) {
+                                System.out.println("Select Gender of the Traveller:\n1--->Male\n2--->Female\n3--->Prefer Not to Say");
+                                String optForGender = input.nextLine();
+                                switch (optForGender) {
+                                    case "1": {
+                                        genderOfTraveller = "Male";
+                                        b=0;
+                                        break;
+                                    }
+                                    case "2": {
+                                        genderOfTraveller = "Female";
+                                        b=0;
+                                        break;
+                                    }
+                                    case "3": {
+                                        genderOfTraveller = "Prefer Not to Say";
+                                        b=0;
+                                        break;
+                                    }
+                                    default: {
+                                        System.out.println("Please click on valid input");
+                                        b-=1;
+                                        if(b==0){
+                                            System.out.println("Maximum Attempts Reached");
+                                        }
+                                        break;
+                                    }
+                                }
+                            }
+                            this.ageOfTraveller=ageOfTraveller;
+                            this.genderOfTraveller=genderOfTraveller;
                             System.out.println("Provide Date for travelling in (DD/MM/YYYY) Format");
                             int calc = 3;
                             int cal = 3;
