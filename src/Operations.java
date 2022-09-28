@@ -3,6 +3,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
@@ -16,6 +17,7 @@ public class Operations {
     public static final String ANSI_RESET= "\u001B[0m"; //for resetting the color of text
     // global variable declarations
     String from;
+    String name;
     String to;
     String train;
     String departureTime;
@@ -113,37 +115,76 @@ public class Operations {
             System.out.println("OOPS! No Trains for your Search!");
         }
     }
-    void dummy(String choice,int opt){
+    void dummy(String choice,int opt) throws Exception{
         //Confirmation and booking process
         System.out.println("The provided details are:\tName : " + travellerName + ", From: " + from + ", TO: " + to + ", Train: " + train + ", Departure Time: " + departureTime);
         System.out.println("Class Of Travelling: " + choice);
-        System.out.println((ANSI_RED+"Cost : "+Cost.get(opt))+ANSI_RESET);
-        System.out.println(ANSI_GREEN+"Cost : Re. 1/-"+ANSI_RESET);
+        System.out.println((ANSI_RED + "Cost : " + Cost.get(opt)) + ANSI_RESET);
+        System.out.println(ANSI_GREEN + "Cost : Re. 1/-" + ANSI_RESET);
         System.out.println("Confirm Your Details before booking!");
-        int ct=3;
-        while(ct>0) {
+        int ct = 3;
+        while (ct > 0) {
             System.out.println("Select\n1----> Book your Ticket \n2---->Exit");
             String book = input.nextLine();
             switch (book) {
                 case "1": {
-                    ct=0;
-                    System.out.println("Your ticket is Booked. \tDetails are:\nName : " + travellerName + "\tAge : "+ageOfTraveller+"\tGender : "+genderOfTraveller+"\nDepart At : " + from + "\tArrive At : " + to + "\nClass : " + choice + ANSI_GREEN + "\t@Cost : Re.1/-" + ANSI_RESET);
-                    System.out.println("Travelling Date : "+travellingDate);
+                    ct = 0;
+                    System.out.println("Your ticket is Booked. \tDetails are:\nName : " + travellerName + "\tAge : " + ageOfTraveller + "\tGender : " + genderOfTraveller + "\nDepart At : " + from + "\tArrive At : " + to + "\nClass : " + choice + ANSI_GREEN + "\t@Cost : Re.1/-" + ANSI_RESET);
+                    System.out.println("Travelling Date : " + travellingDate);
                     System.out.println("\nBooked On: " + cal.getTime() + "\n\t\tThank You!");
                     break;
                 }
                 case "2": {
-                    ct=0;
+                    ct = 0;
                     System.out.println("\tBooking Cancelled \n\tThank you!");
                     break;
                 }
                 default: {
                     System.out.println("Invalid Input");
-                    ct-=1;
-                    if(ct==0){
+                    ct -= 1;
+                    if (ct == 0) {
                         System.out.println("Maximum Attempts Reached.. \n\tThank You!");
                         break;
                     }
+                }break;
+            }
+        }
+        System.out.println("Do you wish to Logout\n1--->Yes\n2--->No");
+        String yesOrNo=input.nextLine();
+        if(yesOrNo.equals("1")){
+            System.out.println("Please Wait");
+            Object o3 = new JSONParser().parse(new FileReader("src/UserData.json"));
+            JSONArray inputOfValue = (JSONArray) o3;
+            for (int q = 0; q < inputOfValue.size(); q++) {
+                JSONObject jobj = (JSONObject) inputOfValue.get(q);
+                if (name.equals(jobj.get("userName"))) {
+                    FileWriter f = new FileWriter("src/UserData.json");
+                    ((JSONObject) inputOfValue.get(q)).put("login", false);
+                    f.write(String.valueOf(inputOfValue));
+                    f.flush();
+                    f.close();
+                    System.out.println("Logged Out Successfully");
+
+
+                }
+            }
+
+        } else if (yesOrNo.equals("2")) {
+            System.out.println("You will be online in background");
+
+        }else{
+            System.out.println("Invalid input.. Auto logout initiated...");
+            Object o2 = new JSONParser().parse(new FileReader("src/UserData.json"));
+            JSONArray inputOfValue = (JSONArray) o2;
+            for (int q = 0; q < inputOfValue.size(); q++) {
+                JSONObject jobj = (JSONObject) inputOfValue.get(q);
+                if (name.equals(jobj.get("userName"))) {
+                    FileWriter f = new FileWriter("src/UserData.json");
+                    ((JSONObject) inputOfValue.get(q)).put("login", false);
+                    f.write(String.valueOf(inputOfValue));
+                    f.flush();
+                    f.close();
+                    System.out.println("Logged Out Successfully");
                 }
             }
         }
@@ -156,7 +197,8 @@ public class Operations {
         for (Object getTheData:tempA) {
             String userName=(String)((JSONObject)getTheData).get("userName");
             String password=(String)((JSONObject)getTheData).get("password");
-            userData.add(new UserDatabase(userName,password)); //adding json to array named userData
+            boolean login=(Boolean) ((JSONObject)getTheData).get("login");
+            userData.add(new UserDatabase(userName,password,login)); //adding json to array named userData
         }
         System.out.println("Enter Your Login Credentials for Booking Process");
         boolean userNotFound=false;
@@ -165,13 +207,41 @@ public class Operations {
             String name=input.nextLine();
             for (int i = 0; i < userData.size(); i++) {
                 if (name.equals(userData.get(i).getUserName())) {
-                    int count = 3;
                     userNotFound = true;
-                    while (count > 0) {
-                        System.out.println("Password :");
-                        String password = input.nextLine();
-                        if (password.equals(userData.get(i).getPassword())) {
-                            count = 0;
+                    this.name=name;
+                    if(userData.get(i).isLogin()){
+                        System.out.println("Already Logged In");
+                    }else{
+                        int count = 3;
+                        userNotFound = true;
+                        while (count > 0) {
+                            System.out.println("Password :");
+                            String password = input.nextLine();
+                            if (password.equals(userData.get(i).getPassword())) {
+                                System.out.println("Logged in Successfully");
+                                Object o1=new JSONParser().parse(new FileReader("src/UserData.json"));
+                                JSONArray inputOfValue=(JSONArray) o1;
+                                for (int q=0;q<inputOfValue.size();q++){
+                                    JSONObject jobj= (JSONObject) inputOfValue.get(q);
+                                    if(name.equals(jobj.get("userName"))){
+                                        FileWriter f=new FileWriter("src/UserData.json");
+                                        ((JSONObject) inputOfValue.get(q)).put("login",true);
+                                        f.write(String.valueOf(inputOfValue));
+                                        f.flush();
+                                        f.close();
+                                        count = 0;
+                                    }
+                                }
+                            } else {
+                                System.out.println("Please provide your valid password!");
+                                System.out.println((count - 1) + " attempts left");
+                                if (count == 1) {
+                                    System.out.println("Maximum Attempts reached!\n\t Thank You!");
+                                }
+                                count -= 1;
+                            }
+                        }
+                    }
                             System.out.println("Provide Name of the Traveller");
                             String travellerName = input.nextLine();
                             System.out.println("Provide Age of the Traveller");
@@ -285,20 +355,12 @@ public class Operations {
                                 if (cal == 0)
                                     break;
                             }
-                        } else {
-                            System.out.println("Please provide your valid password!");
-                            System.out.println((count - 1) + " attempts left");
-                            if (count == 1) {
-                                System.out.println("Maximum Attempts reached!\n\t Thank You!");
-                            }
-                            count -= 1;
                         }
                     }
                 }
-            }
+
             if (!userNotFound) {
                 System.out.println("User Invalid!! / User Name not found!! \n\tTry again");
             }
-        }
     }
 }
