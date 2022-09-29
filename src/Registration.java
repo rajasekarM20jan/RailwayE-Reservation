@@ -38,6 +38,7 @@ public class Registration extends Operations {
             if(password.equals(confirmPassword)){
                 objectOfInitialization.put("userName",userName);
                 objectOfInitialization.put("password",password);
+                objectOfInitialization.put("login",false);
                 arrayOfUserData.add(objectOfInitialization);
                 FileWriter w=new FileWriter("src/UserData.json");
                 w.write(String.valueOf(arrayOfUserData));

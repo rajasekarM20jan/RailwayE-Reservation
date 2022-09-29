@@ -94,7 +94,7 @@ public class Operations {
                                     break;
                                 }
                                 default: {
-                                    System.out.println("Invalid Input");
+                                    System.out.println(ANSI_RED+"Invalid Input"+ANSI_RESET);
                                     a-=1;
                                     if(a==0){
                                         System.out.println("Maximum attempts Reached \nThank you!");
@@ -106,7 +106,7 @@ public class Operations {
                         }break;
                     }
                     default:{
-                        System.out.println("Invalid option");
+                        System.out.println(ANSI_RED+"Invalid option"+ANSI_RESET);
                         break;
                     }
                 }
@@ -163,7 +163,7 @@ public class Operations {
                     f.write(String.valueOf(inputOfValue));
                     f.flush();
                     f.close();
-                    System.out.println("Logged Out Successfully");
+                    System.out.println("See you Again "+ANSI_GREEN+name+ANSI_RESET);
 
 
                 }
@@ -173,7 +173,7 @@ public class Operations {
             System.out.println("You will be online in background");
 
         }else{
-            System.out.println("Invalid input.. Auto logout initiated...");
+            System.out.println(ANSI_RED+"Invalid input.. Auto logout initiated..."+ANSI_RESET);
             Object o2 = new JSONParser().parse(new FileReader("src/UserData.json"));
             JSONArray inputOfValue = (JSONArray) o2;
             for (int q = 0; q < inputOfValue.size(); q++) {
@@ -184,7 +184,7 @@ public class Operations {
                     f.write(String.valueOf(inputOfValue));
                     f.flush();
                     f.close();
-                    System.out.println("Logged Out Successfully");
+                    System.out.println("See you Again "+ANSI_GREEN+name+ANSI_RESET);
                 }
             }
         }
@@ -210,7 +210,7 @@ public class Operations {
                     userNotFound = true;
                     this.name=name;
                     if(userData.get(i).isLogin()){
-                        System.out.println("Already Logged In");
+                        System.out.println("Welcome Back "+ANSI_RED+name+ANSI_RESET);
                     }else{
                         int count = 3;
                         userNotFound = true;
@@ -218,7 +218,7 @@ public class Operations {
                             System.out.println("Password :");
                             String password = input.nextLine();
                             if (password.equals(userData.get(i).getPassword())) {
-                                System.out.println("Logged in Successfully");
+                                System.out.println("Welcome"+name);
                                 Object o1=new JSONParser().parse(new FileReader("src/UserData.json"));
                                 JSONArray inputOfValue=(JSONArray) o1;
                                 for (int q=0;q<inputOfValue.size();q++){
@@ -235,10 +235,11 @@ public class Operations {
                             } else {
                                 System.out.println("Please provide your valid password!");
                                 System.out.println((count - 1) + " attempts left");
-                                if (count == 1) {
-                                    System.out.println("Maximum Attempts reached!\n\t Thank You!");
-                                }
                                 count -= 1;
+                                if (count == 0) {
+                                    System.out.println("Maximum Attempts reached!\n\t Thank You!");
+                                    System.exit(1);
+                                }
                             }
                         }
                     }
@@ -357,10 +358,9 @@ public class Operations {
                             }
                         }
                     }
-                }
-
             if (!userNotFound) {
                 System.out.println("User Invalid!! / User Name not found!! \n\tTry again");
             }
+                }
     }
 }
